@@ -5,32 +5,32 @@ function computerPlay (){
 function playRound(playerSelection, computerSelection){
     playerSelection = playerSelection.toUpperCase();
     if (playerSelection === computerSelection){
-        console.log("Its a tie");
+        return("Its a tie");
     }
     else{
         switch (playerSelection){
             case "ROCK":
                 if (computerSelection == "PAPER"){
-                    console.log("computer wins");
+                    return("computer wins");
                 }
                 else if (computerSelection == "SCISSORS"){
-                    console.log("player wins");
+                    return("player wins");
                 }
                 break;
             case "PAPER":
                 if (computerSelection == "ROCK"){
-                    console.log("player wins");
+                    return("player wins");
                 }
                 else if (computerSelection == "SCISSORS"){
-                    console.log("computer wins");
+                    return("computer wins");
                 }
                 break;
             case "SCISSORS":
                     if (computerSelection == "ROCK"){
-                        console.log("computer wins");
+                        return("computer wins");
                     }
                     else if (computerSelection == "PAPER"){
-                        console.log("player wins");
+                        return("player wins");
                     }
                     break;
         }
@@ -38,10 +38,14 @@ function playRound(playerSelection, computerSelection){
     console.log(playerSelection +  " "  + computerSelection)
 };
 function game(){
-    let counter = 1;
-    while (counter <= 5){
-        playRound(prompt("Rock,Paper,Scissors"),computerPlay());
-        counter++;
+    let round = 1;
+    let scorecard = [];
+    let result;
+    while (round <= 5){
+        result = playRound(prompt("Rock,Paper,Scissors"),computerPlay());
+        scorecard.push(result + " Round " + round);
+        round++;
     }
+    console.log(scorecard);
 }
 game();
