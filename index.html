@@ -5,9 +5,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissers</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    
+    <button class="rock">Rock</button>
+    <button class="paper">Paper</button>
+    <button class="scissors">Scissors</button>
+    <button class="reset">RESET</button>
+    <div class="scorecard">
+        <h2>SCORECARD</h2>
+        <div class="Individual">
+            <h4>Player points</h4>
+            <p id="playerpoint">0</p>
+        </div>
+        <div class="Individual">
+            <h4>Computer points</h4>
+            <p id="computerpoint">0</p>
+        </div>
+        <div class="choices">
+            <ul>
+                <li>Player Choice</li>
+                <li id="playerchoice"></li>
+            </ul>
+            <ul>
+                <li>Computer Choice</li>
+                <li id="computerchoice"></li>
+            </ul>
+        </div>
+    </div>
 </body>
-<script src="logic.js"></script>
+<script>
+    console.log(parseInt(document.querySelector("#playerpoint").innerHTML)+1);
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click',()=>{
+            let playerwording = button.innerHTML;
+            let playerchoice = document.querySelector("#playerchoice");
+            playerchoice.innerHTML = playerwording.toUpperCase();
+            let computerwording = computerPlay();
+            let computerchoice = document.querySelector("#computerchoice");
+            computerchoice.innerHTML = computerwording;
+            playRound(playerwording,computerwording);
+        });
+    });
+
+    ///////////////////////////////////
+
+    function computerPlay (){
+        const options = ["ROCK","PAPER","SCISSORS"]
+        return (options[Math.floor(Math.random()*3)]);
+    };
+    function playRound(playerSelection, computerSelection){
+        playerSelection = playerSelection.toUpperCase();
+        if (playerSelection === computerSelection){
+            console.log("Its a tie");
+        }
+        else{
+            switch (playerSelection){
+                case "ROCK":
+                    if (computerSelection == "PAPER"){
+                        document.querySelector("#computerpoint").innerHTML = parseInt(document.querySelector("#computerpoint").innerHTML)+1;
+                    }
+                    else if (computerSelection == "SCISSORS"){
+                        document.querySelector("#playerpoint").innerHTML = parseInt(document.querySelector("#playerpoint").innerHTML)+1;
+                    }
+                    break;
+                case "PAPER":
+                    if (computerSelection == "ROCK"){
+                        document.querySelector("#playerpoint").innerHTML = parseInt(document.querySelector("#playerpoint").innerHTML)+1;
+                    }
+                    else if (computerSelection == "SCISSORS"){
+                        document.querySelector("#computerpoint").innerHTML = parseInt(document.querySelector("#computerpoint").innerHTML)+1;
+                    }
+                    break;
+                case "SCISSORS":
+                        if (computerSelection == "ROCK"){
+                            document.querySelector("#computerpoint").innerHTML = parseInt(document.querySelector("#computerpoint").innerHTML)+1;
+                        }
+                        else if (computerSelection == "PAPER"){
+                            document.querySelector("#playerpoint").innerHTML = parseInt(document.querySelector("#playerpoint").innerHTML)+1;
+                        }
+                        break;
+            }
+    }
+    if (document.querySelector("#computerpoint").innerHTML === "5"){
+        const congrats = document.createElement("h4");
+        congrats.innerHTML = "Congratulations computer wins!";
+        const scorecard = document.querySelector(".scorecard");
+        scorecard.appendChild(congrats);
+        const reset = document.querySelector(".reset");
+        reset.addEventListener("click",()=>{
+        document.querySelector("#computerpoint").innerHTML = "0";
+        document.querySelector("#playerpoint").innerHTML = "0";
+        congrats.innerHTML = "";
+})
+    }
+    else if (document.querySelector("#playerpoint").innerHTML === "5"){
+        const congrats = document.createElement("h4");
+        congrats.innerHTML = "Congratulations player wins!";
+        const scorecard = document.querySelector(".scorecard");
+        scorecard.appendChild(congrats);
+        const reset = document.querySelector(".reset");
+        reset.addEventListener("click",()=>{
+        document.querySelector("#computerpoint").innerHTML = "0";
+        document.querySelector("#playerpoint").innerHTML = "0";
+        congrats.innerHTML = "";
+})
+    }
+};
+</script>
 </html>
